@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Gamepanel extends JPanel implements Runnable {
-    int x = 0, y = 0;
     Thread thread = new Thread();
+    Enemy enemy = new Enemy();
 
     Gamepanel() {
         super();
@@ -14,8 +14,8 @@ public class Gamepanel extends JPanel implements Runnable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.red);
-        g.fillRect(x, y, 100, 100);
+        enemy.paintComponent(g);
+
     }
 
     public void startGame() {
@@ -24,6 +24,7 @@ public class Gamepanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        enemy.update();
     }
 
     @Override
@@ -32,13 +33,14 @@ public class Gamepanel extends JPanel implements Runnable {
         double deltaTime = 0;
         long lastPassedTime = System.nanoTime();
         long currentTime = 0;
+
         while (thread != null) {
             currentTime = System.nanoTime();
             deltaTime += (currentTime - lastPassedTime) / drawInterval;
             lastPassedTime = currentTime;
             if (deltaTime >= 1) {
-                x++;
                 repaint();
+                update();
                 deltaTime--;
             }
         }
