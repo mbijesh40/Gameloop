@@ -1,20 +1,41 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Gamepanel extends JPanel implements Runnable {
     Thread thread = new Thread();
     Enemy enemy = new Enemy();
+    Enemy[] enemies = new Enemy[10];
+    Player player = new Player();
 
     Gamepanel() {
         super();
         this.setPreferredSize(new Dimension(500, 500));
         this.setBackground(Color.BLACK);
 
+        for (int i = 0; i < enemies.length; i++) {
+            enemies[i] = new Enemy();
+        }
+
+        setFocusable(true);
+        addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                System.out.println("User has Pressed a key.");
+                player.Move();
+            }
+
+            public void keyReleased(KeyEvent e) {
+                player.Stop();
+            }
+        });
+
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         enemy.paintComponent(g);
+        player.paintComponent(g);
 
     }
 
