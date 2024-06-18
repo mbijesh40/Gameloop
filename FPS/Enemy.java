@@ -20,11 +20,14 @@ public class Enemy extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.cyan);
         g.drawImage(image, x, y, 100, 100, this);
     }
 
     public void update() {
         y = y + 1;
+        if (y == 500) {
+            y = 0;
+            x = randomNum.nextInt(500);
+        }
     }
 }
